@@ -18,7 +18,7 @@ PhishShield is an AI-powered, dual-engine phishing detection platform designed t
 ## 🛠️ Project Architecture
 
 ```text
-phishshield/
+Email Phising Detection/
 ├── backend/
 │   ├── main.py             # FastAPI Unified REST API & Static Server
 │   ├── agent.py            # AI Decision & XAI Calibration Agent
@@ -26,9 +26,14 @@ phishshield/
 │   └── website_scanner.py  # URLBERT Website Scanner + Heuristic Fallback
 ├── extension/
 │   ├── manifest.json       # Chrome Extension Manifest V3 configuration
-│   ├── popup.html / js     # Extension HUD & Gauge Renderer
-│   ├── dashboard.html / js # Threat Intelligence Command Console
-│   └── content.js          # DOM extraction script for Gmail & Outlook
+│   ├── popup.html          # Extension Popup UI Layout
+│   ├── popup.js            # Popup Event Handler & Scan Trigger
+│   ├── popup.css           # Popup Stylesheet & Signal Theme
+│   ├── dashboard.html      # Threat Intelligence Dashboard Layout
+│   ├── dashboard.js        # Dashboard History & Manual URL Search Handler
+│   ├── dashboard.css       # Dashboard Stylesheet & Analytics Grid
+│   ├── content.js          # DOM extraction & Warning Banner Injection Script
+│   └── content.css         # Injected Webmail Warning Styles
 ├── requirements.txt        # Python package dependencies
 └── README.md
 ```
