@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhishShield — Threat Intelligence Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Ambient background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-vignette" aria-hidden="true"></div>
+
+  <!-- Vector Watermark -->
+  <div class="watermark" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" style="width: 100%; height: 100%;">
+      <path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5L12 2z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+      <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="dashboard">
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header class="dash-header">
+      <div class="header-left">
+        <div class="logo-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5L12 2z" fill="var(--signal)" opacity="0.14"/>
+            <path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5L12 2z" stroke="var(--signal)" stroke-width="1.5" fill="none"/>
+            <path d="M9 12l2 2 4-4" stroke="var(--signal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="header-title">
+          <span class="brand-name">Phish<em>Shield</em></span>
+          <span class="brand-sub">Threat Intelligence Dashboard</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="status-pill">
+          <span class="status-dot pulse"></span>
+          <span class="status-text">MONITORING ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="header-meta">
+          <span class="meta-label">Session</span>
+          <span class="meta-val" id="sessionTime">00:00:00</span>
+        </div>
+        <button id="closeDashBtn" class="close-btn" aria-label="Close dashboard">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Quick Analyze by URL -->
+    <section class="quick-analyze-section">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span class="label-text">Quick Analyze by URL</span>
+        <span class="label-line"></span>
+      </div>
+
+      <div class="url-input-group">
+        <input type="text" id="urlInput" placeholder="Paste any website URL or webmail link here…" />
+        <button id="analyzeUrlBtn" class="analyze-url-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Analyze URL
+        </button>
+      </div>
+
+      <div id="urlAnalysisResult" class="url-analysis-result" style="display: none;"></div>
+    </section>
+
+    <!-- ═══════════ STAT CARDS ═══════════ -->
+    <section class="stats-grid" aria-label="Scan statistics">
+
+      <div class="stat-card" data-index="0">
+        <div class="stat-icon-wrap neutral">
+          <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number" id="totalScans">—</div>
+          <div class="stat-label">Total Scans</div>
+          <div class="stat-bar-wrap"><div class="stat-bar neutral" id="barTotal"></div></div>
+        </div>
+      </div>
+
+      <div class="stat-card danger" data-index="1">
+        <div class="stat-icon-wrap red">
+          <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number red" id="phishingCount">—</div>
+          <div class="stat-label">Phishing Detected</div>
+          <div class="stat-bar-wrap"><div class="stat-bar red" id="barPhish"></div></div>
+        </div>
+      </div>
+
+      <div class="stat-card safe" data-index="2">
+        <div class="stat-icon-wrap blue">
+          <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number blue" id="safeCount">—</div>
+          <div class="stat-label">Safe Emails</div>
+          <div class="stat-bar-wrap"><div class="stat-bar blue" id="barSafe"></div></div>
+        </div>
+      </div>
+
+      <div class="stat-card" data-index="3">
+        <div class="stat-icon-wrap amber">
+          <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number amber" id="avgScore">—</div>
+          <div class="stat-label">Avg Risk Score</div>
+          <div class="stat-bar-wrap"><div class="stat-bar amber" id="barAvg"></div></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══════════ THREAT BREAKDOWN ═══════════ -->
+    <section class="breakdown-section">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span class="label-text">Threat Breakdown</span>
+        <span class="label-line"></span>
+      </div>
+      <div class="breakdown-bars">
+        <div class="breakdown-item">
+          <span class="bd-name">Critical / High</span>
+          <div class="bd-track"><div class="bd-fill critical" id="bdCritical" style="width:0%"></div></div>
+          <span class="bd-pct" id="pctCritical">0%</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="bd-name">Medium Risk</span>
+          <div class="bd-track"><div class="bd-fill medium" id="bdMedium" style="width:0%"></div></div>
+          <span class="bd-pct" id="pctMedium">0%</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="bd-name">Low Risk</span>
+          <div class="bd-track"><div class="bd-fill low" id="bdLow" style="width:0%"></div></div>
+          <span class="bd-pct" id="pctLow">0%</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="bd-name">Safe</span>
+          <div class="bd-track"><div class="bd-fill safe" id="bdSafe" style="width:0%"></div></div>
+          <span class="bd-pct" id="pctSafe">0%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SCAN HISTORY ═══════════ -->
+    <section class="history-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-label-text">Scan History</span>
+          <span class="count-badge" id="countBadge">0 records</span>
+        </div>
+        <div class="header-actions">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="6.5" cy="6.5" r="4.5"/>
+              <path d="M10 10l3.5 3.5" stroke-linecap="round"/>
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search subject, sender…" oninput="filterHistory()">
+          </div>
+          <button id="clearAllBtn" class="clear-btn">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2 3h8M5 3V2h2v1M3 3l.5 7h5L9 3"/>
+            </svg>
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>Date &amp; Time</th>
+              <th>Subject</th>
+              <th>Sender</th>
+              <th>Risk Level</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <!-- Injected by dashboard.js -->
+          </tbody>
+        </table>
+
+        <div class="empty-state" id="emptyState">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <p>No scans recorded yet.</p>
+          <small>Emails and websites you scan will appear here.</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="dash-footer">
+      <span class="footer-brand">PhishShield <span class="footer-version">v1.1</span></span>
+      <span class="footer-divider">·</span>
+      <span class="footer-tech">RAG + Agentic AI Engine</span>
+      <span class="footer-divider">·</span>
+      <span class="footer-copy">© 2026 PhishShield</span>
+    </footer>
+
+  </div>
+
+  <!-- ═══════════ CONFIRM DIALOG ═══════════ -->
+  <div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-label="Confirm action">
+    <div class="confirm-card">
+      <div class="confirm-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+      </div>
+      <h3 class="confirm-title">Clear All History?</h3>
+      <p class="confirm-msg">This will permanently delete all <strong id="confirmCount">0</strong> scan records. This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="confirm-cancel" id="confirmCancel">Cancel</button>
+        <button class="confirm-ok" id="confirmOk">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 3h8M5 3V2h2v1M3 3l.5 7h5L9 3"/>
+          </svg>
+          Delete All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TOAST ═══════════ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

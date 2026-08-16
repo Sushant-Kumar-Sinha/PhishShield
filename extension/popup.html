@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="ps-root">
+
+    <!-- Header -->
+    <header class="ps-header">
+      <div class="ps-logo">
+        <span class="ps-logo-ring" id="logoRing" aria-hidden="true"></span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5L12 2z" fill="var(--signal)" opacity="0.14"/>
+          <path d="M12 2L4 5v6c0 5.25 3.5 10.15 8 11.35C16.5 21.15 20 16.25 20 11V5L12 2z" stroke="var(--signal)" stroke-width="1.5" fill="none"/>
+          <path d="M9 12l2 2 4-4" stroke="var(--signal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="ps-wordmark">Phish<em>Shield</em></span>
+      </div>
+      <div class="ps-status" id="statusDot">
+        <span class="dot dot--idle"></span>
+        <span class="status-text">Ready</span>
+      </div>
+    </header>
+
+    <!-- Current target preview -->
+    <div class="ps-preview" id="emailPreview">
+      <p class="preview-hint">Open an email or website and click <strong>Analyze</strong> to scan it.</p>
+    </div>
+
+    <!-- Analyze button -->
+    <button class="ps-btn-analyze" id="analyzeBtn">
+      <span class="btn-shine" aria-hidden="true"></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Analyze Current Target</span>
+    </button>
+
+    <!-- Loading state -->
+    <div class="ps-loading" id="loadingState" style="display:none">
+      <div class="radar-spinner" aria-hidden="true">
+        <span class="radar-ring"></span>
+        <span class="radar-ring radar-ring--2"></span>
+        <span class="radar-sweep"></span>
+        <span class="radar-core"></span>
+      </div>
+      <p class="loading-text">Scanning with AI <span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+    </div>
+
+    <!-- Results panel -->
+    <div class="ps-result" id="resultPanel" style="display:none">
+      <div class="result-header" id="resultHeader">
+        <div class="risk-badge" id="riskBadge">–</div>
+        <div class="risk-score">
+          <span class="score-label">Risk Score</span>
+          <span class="score-value" id="scoreValue">–/10</span>
+        </div>
+      </div>
+
+      <!-- Gauge -->
+      <div class="gauge-wrap">
+        <span class="gauge-glow" aria-hidden="true"></span>
+        <canvas id="gaugeCanvas" width="240" height="120"></canvas>
+        <div class="gauge-label" id="gaugeLabel">–</div>
+      </div>
+
+      <!-- Detail rows -->
+      <div class="ps-details">
+        <div class="detail-row" id="linksRow" style="--i:0">
+          <span class="detail-icon">🔗</span>
+          <span class="detail-label">Links found</span>
+          <span class="detail-value" id="linksVal">–</span>
+        </div>
+        <div class="detail-row" id="keywordsRow" style="--i:1">
+          <span class="detail-icon">🔑</span>
+          <span class="detail-label">Keywords</span>
+          <span class="detail-value" id="keywordsVal">–</span>
+        </div>
+        <div class="detail-row" id="ragRow" style="--i:2">
+          <span class="detail-icon">🧠</span>
+          <span class="detail-label">RAG Match</span>
+          <span class="detail-value" id="ragVal">–</span>
+        </div>
+      </div>
+
+      <!-- XAI Explanation -->
+      <details class="ps-xai" id="xaiPanel">
+        <summary>Why was this flagged?</summary>
+        <p id="xaiText">–</p>
+      </details>
+
+      <!-- Feedback -->
+      <div class="ps-feedback">
+        <span>Was this correct?</span>
+        <button id="fbYes" class="fb-btn fb-yes">✓ Yes</button>
+        <button id="fbNo" class="fb-btn fb-no">✗ No</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="ps-footer">
+      <span>PhishShield v1.1</span>
+      <a href="#" id="dashboardLink">Dashboard ↗</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

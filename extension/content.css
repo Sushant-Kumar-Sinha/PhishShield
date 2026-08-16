@@ -1,0 +1,31 @@
+/*
+ * PhishShield — content.css
+ * Styles injected into Gmail / Outlook pages.
+ * All rules are namespaced with #ps- to avoid conflicts.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap');
+
+/* Warning banner (created dynamically in content.js) */
+#ps-warning-banner {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  box-sizing: border-box !important;
+}
+
+#ps-warning-banner * {
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+}
+
+/* Slide-in animation */
+@keyframes ps-slide-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* High-risk highlight — optional: adds a subtle red tint to the email body */
+.ps-email-flagged {
+  outline: 2px solid rgba(248, 81, 73, 0.3) !important;
+  outline-offset: 4px !important;
+  border-radius: 4px !important;
+}
