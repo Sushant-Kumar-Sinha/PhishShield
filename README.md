@@ -31,13 +31,17 @@ phishshield/
 │   └── content.js          # DOM extraction script for Gmail & Outlook
 ├── requirements.txt        # Python package dependencies
 └── README.md
-⚙️ Installation & Local SetupClone the Repository:Bashgit clone [https://github.com/YOUR_USERNAME/PhishShield.git](https://github.com/YOUR_USERNAME/PhishShield.git)
+
+
+* **⚙️ Installation & Setup Guide1. Clone & Setup ProjectOpen your terminal and run the following commands to clone your repository, create your virtual environment, and install all required dependencies:Bashgit clone [https://github.com/YOUR_USERNAME/PhishShield.git](https://github.com/YOUR_USERNAME/PhishShield.git)
 cd PhishShield
-Create & Activate Virtual Environment:Bashpython -m venv venv
+
+python -m venv venv
 # On Windows:
 .\venv\Scripts\Activate
 # On macOS/Linux:
 source venv/bin/activate
-Install Dependencies:Bashpip install -r requirements.txt
-Run the Backend Server:Bashpython backend/main.py
-Access the local dashboard at: http://localhost:8000/dashboard  Load the Chrome Extension:Open Chrome and navigate to chrome://extensions/.Enable Developer mode (top right).Click Load unpacked and select your extension/ folder.📜 LicenseDistributed under the MIT License. See LICENSE for more information.
+
+pip install -r requirements.txt
+2. Run the Backend ServerStart your FastAPI unified server locally:Bashpython backend/main.py
+Access the local threat intelligence dashboard at: http://localhost:8000/dashboard  3. Load the Chrome ExtensionOpen Google Chrome and navigate to chrome://extensions/.Enable Developer mode using the toggle switch in the top-right corner.Click the Load unpacked button in the top-left corner.Select your project's extension/ folder.📜 LicenseDistributed under the MIT License. See the LICENSE file for more details.
