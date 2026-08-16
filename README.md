@@ -17,7 +17,7 @@ PhishShield is an AI-powered, dual-engine phishing detection platform designed t
 
 ## 🛠️ Project Architecture
 
-```text
+text
 phishshield/
 ├── backend/
 │   ├── main.py             # FastAPI Unified REST API & Static Server
