@@ -17,7 +17,7 @@ PhishShield is an AI-powered, dual-engine phishing detection platform designed t
 
 ## 🛠️ Project Architecture
 
-text
+```text
 phishshield/
 ├── backend/
 │   ├── main.py             # FastAPI Unified REST API & Static Server
@@ -31,7 +31,7 @@ phishshield/
 │   └── content.js          # DOM extraction script for Gmail & Outlook
 ├── requirements.txt        # Python package dependencies
 └── README.md
-
+```
 
 ⚙️ Installation & Setup Guide1. Clone & Setup ProjectOpen your terminal and run the following commands to clone your repository, create your virtual environment, and install all required dependencies:Bashgit clone [https://github.com/YOUR_USERNAME/PhishShield.git](https://github.com/YOUR_USERNAME/PhishShield.git)
 cd PhishShield
@@ -44,4 +44,7 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 2. Run the Backend ServerStart your FastAPI unified server locally:Bashpython backend/main.py
-Access the local threat intelligence dashboard at: http://localhost:8000/dashboard  3. Load the Chrome ExtensionOpen Google Chrome and navigate to chrome://extensions/.Enable Developer mode using the toggle switch in the top-right corner.Click the Load unpacked button in the top-left corner.Select your project's extension/ folder.📜 LicenseDistributed under the MIT License. See the LICENSE file for more details.
+Access the local threat intelligence dashboard at: http://localhost:8000/dashboard  
+3. Load the Chrome ExtensionOpen Google Chrome and navigate to chrome://extensions/.Enable Developer mode using the toggle switch in the top-right corner.Click the Load unpacked button in the top-left corner.Select your project's extension/ folder.
+
+📜 LicenseDistributed under the MIT License. See the LICENSE file for more details.
