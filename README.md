@@ -34,9 +34,12 @@ phishshield/
 ```
 
 ⚙️ Installation & Setup Guide1.
-Clone & Setup ProjectOpen your terminal and run the following commands to clone your repository, create your virtual environment, and install all required dependencies
-:Bashgit clone [https://github.com/YOUR_USERNAME/PhishShield.git](https://github.com/YOUR_USERNAME/PhishShield.git)
-cd PhishShield
+Clone & Setup Project:
+1. Open your terminal and run the following commands to clone your repository.
+2. create your virtual environment.
+3. install all required dependencies.
+4. Bashgit clone [https://github.com/YOUR_USERNAME/PhishShield.git](https://github.com/YOUR_USERNAME/PhishShield.git)
+5. cd PhishShield
 
 python -m venv venv
 # On Windows:
